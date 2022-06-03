@@ -1,3 +1,6 @@
+/* IMPORTING FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -7,11 +10,36 @@ body {
   background-color: rgb(30, 30, 30);
 }
 
+/* Top header */
 header {
   border-bottom: 1px solid #f1f1f1;
   height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  color: #f1f1f1;
+  position: relative;
+}
+
+header .title {
+  font-family: "Kdam Thmor Pro", sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+header .menu-right {
+  position: absolute;
+  right: 40px;
+  top: 25%;
+}
+
+header .menu-right button {
+  font-size: 1.2rem;
+  margin-left: 20px;
+  border: none;
+  background: none;
   color: #f1f1f1;
 }
