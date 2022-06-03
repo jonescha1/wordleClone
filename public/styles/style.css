@@ -14,9 +14,6 @@ body {
 header {
   border-bottom: 1px solid #f1f1f1;
   height: 50px;
-  /* display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   color: #f1f1f1;
   position: relative;
 }
@@ -43,3 +40,33 @@ header .menu-right button {
   background: none;
   color: #f1f1f1;
 }
+
+/*******************Style for board*******************/
+#game {
+  width: 100%;
+}
+
+#board-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#board {
+  width: 500px;
+  height: 500px;
+  padding: 10px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  gap: 10px;
+}
+/* These divs are generated from the main.js file */
+#board .block {
+  background-color: red;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*************************************************************/
