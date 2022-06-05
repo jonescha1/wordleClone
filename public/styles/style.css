@@ -63,11 +63,45 @@ header .menu-right button {
 }
 /* These divs are generated from the main.js file */
 #board .block {
-  /* background-color: red; */
+  background-color: transparent;
   font-size: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid #f1f1f1; */
+  perspective: 1000px;
+}
+
+#board .block-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Just testing. This will be used with JS to flip the card when triggered. */
+#board .block:hover .block-inner {
+  transform: rotateX(180deg);
+}
+#board .block-front,
+#board .block-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+#board .block-front {
+  /* background-color: #f1f1f1; */
   border: 1px solid #f1f1f1;
+}
+
+#board .block-back {
+  background-color: green;
+  color: #f1f1f1;
+  transform: rotateX(180deg);
 }
 /*************************************************************/
