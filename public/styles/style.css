@@ -82,7 +82,10 @@ header .menu-right button {
 }
 
 /* Just testing. This will be used with JS to flip the card when triggered. */
-#board .block:hover .block-inner {
+/* #board .block:hover .block-inner {
+  transform: rotateX(180deg);
+} */
+.rotate {
   transform: rotateX(180deg);
 }
 #board .block-front,
