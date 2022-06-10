@@ -108,7 +108,6 @@ header .menu-right button {
 }
 
 #board .block-back {
-  background-color: green;
   color: #f1f1f1;
   transform: rotateX(180deg);
 }
