@@ -44,6 +44,7 @@ header .menu-right button {
 /*******************Style for board*******************/
 #game {
   width: 100%;
+  position: relative;
 }
 
 #board-container {
@@ -111,4 +112,3 @@ header .menu-right button {
   color: #f1f1f1;
   transform: rotateX(180deg);
 }
-/*************************************************************/
