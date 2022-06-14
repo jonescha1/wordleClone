@@ -8,6 +8,7 @@
 
 body {
   background-color: rgb(30, 30, 30);
+  height: 100vh;
 }
 
 /* Top header */
@@ -61,6 +62,7 @@ header .menu-right button {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   gap: 10px;
+  position: relative;
 }
 /* These divs are generated from the main.js file */
 #board .block {
@@ -111,4 +113,19 @@ header .menu-right button {
 #board .block-back {
   color: #f1f1f1;
   transform: rotateX(180deg);
+}
+
+/* This will be added to the html by js based on if the user wins or loses */
+#display_result {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  top: 0;
 }
