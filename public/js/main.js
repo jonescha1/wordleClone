@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Holds an array of words the user has guessed
   let guessedWords = [[]];
-  let word; //This is just to for testing against a correct word. Will pull in random words later on.
+  let word; //this is where the random word that is fetched will be stored.
   let availableSpace = 0;
   let availableSpaceEl = document.getElementById(
     `block-front-` + String(availableSpace)
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ********************************************************************************************
   // Builds the game board wireframe
   async function buildBoard() {
+    //By awaiting the getRandomWord function, the board will not build out on the screen unless it retrieves a word.
     word = String(await getRandomWord());
     const board = document.getElementById("board");
 
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ********************************************************************************************
-  //Gets the number of guessed words.
+  //Gets the amount of guessed words.
   function getCurrentWordArr() {
     const numberOfGuessedWords = guessedWords.length;
     return guessedWords[numberOfGuessedWords - 1];
@@ -86,9 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ********************************************************************************************
-  // Handler for when the user hit the Enter/Return key
+  // Handler for when the user hits the Enter/Return key
   function submitHandler() {
-    // const board = document.querySelectorAll("#board");
     const currentWordArr = getCurrentWordArr();
     const currentWord = currentWordArr.join("");
 
@@ -108,56 +108,64 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ********************************************************************************************
-  // Create a function that will flip the corresponding blocks after hitting enter.
+  //function that will flip the corresponding blocks after hitting enter.
   function showCorrectBlocks(correctWordArr, guessedWordArr) {
-    // const currentWordArr = getCurrentWordArr(); //This will return the row of the current word
+    /* this variable will help change the block that the class "rotate" is assigned to.
+     At the end of each guess, the current location of the elements position is set to the last block of that row (example: The first rows last element id is "5", 2nd row is "10" etc.). 
+    By taking the last elements id number and subtracting 4, it will ensure that the below loop will start at the first block of that row.*/
     var elementPosition = 4;
 
+    //Creating a nested loop scenarior to check the guessed word against the correct word
     for (let i = 0; i < guessedWordArr.length; i++) {
-      //Creating a nested loop scenarior to check the guessed word against the correct word
       for (let j = 0; j < correctWordArr.length; j++) {
+        let count = 0;
         //This will check to see if a letter in the guessed word is in the correct word as well as if they are in the same index location.
-        console.log(guessedWordArr[i], correctWordArr[j]);
+
         let blockParent = document.getElementById(
           String(availableSpace - elementPosition)
         );
         let firstChild = blockParent.querySelector(".block-inner");
         let secondChild = firstChild.querySelector(".block-back");
         if (guessedWordArr[i] === correctWordArr[j] && i == j) {
-          //Need to flip the corresponding block and set background color to green
-
+          //flip the corresponding block and set background color to green
           firstChild.classList.add("rotate");
           secondChild.style.backgroundColor = "#538d4e";
           secondChild.textContent = guessedWordArr[i];
         }
-        // This just checks if the letter in the guessed word is anywhere within the correct word.
+        // This just checks if the letter in the guessed word is anywhere within the correct word and has not already been asigned by the previous condition..
         else if (
           guessedWordArr[i] === correctWordArr[j] &&
           secondChild.textContent == ""
         ) {
-          //Need to flip the corresponding block and set the background color to yellow.
-
+          //flip the corresponding block and set the background color to yellow.
           firstChild.classList.add("rotate");
           secondChild.style.backgroundColor = "#b59f3b";
           secondChild.textContent = guessedWordArr[i];
         }
       }
-      // console.log(elementPosition);
+
       elementPosition = elementPosition - 1;
     }
   }
 
   // ********************************************************************************************
+  // This function when called will show the blocks colors based on the users input and THEN it will show the player that they won.
   async function userCorrect(word, currentWord, length) {
     await showCorrectBlocks(word, currentWord, length);
-    console.log("correct answer");
+
+    displayMessage(
+      `Congratulations, You guessed the correct word on try #${length}!!`
+    );
   }
   // ********************************************************************************************
+  // This function when called will show the blocks colors based on the users input and THEN it will show the player that they have no more guesses
   async function userNoMoreGuesses(word, currentWord, length) {
     await showCorrectBlocks(word, currentWord, length);
-    console.log("Sorry, No more guesses");
+
+    displayMessage(`No more guesses allowed. The correct word is ${word}!`);
   }
 
+  // This functino will fetch a random word from the given http address and return the word.
   async function getRandomWord() {
     const response = await fetch(
       "https://random-word-api.herokuapp.com/word?length=5"
@@ -165,11 +173,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const randomWord = await response.json();
     return randomWord;
   }
-});
 
-// Notes
-// Need to clean code up. Possibly go about flipping the cards by grabbing each divs text content upon hitting enter and compairing it to the correct words characters
-//Find a way to disable a key after the letter has been placed in the write spot. At this point the user is able to enter a whole row of the same letters some may be green and some yellow.
-//change font of blocks
-//pull in random word api or something to generate a random word.
-//get rid of all the console logs and unneeded code.
+  //function to display a status message across the screen
+  function displayMessage(status) {
+    const message = document.createElement("div");
+    message.setAttribute("id", "display_result");
+    message.textContent = status;
+
+    // let head = document.getElementsByTagName("header");
+    document.body.insertBefore(message, document.body.firstChild);
+    setTimeout(resetGame, 5000);
+  }
+
+  function resetGame() {
+    const board = document.getElementById("board");
+    board.innerHTML = "";
+    document.getElementById("display_result").remove();
+    buildBoard();
+
+    //Holds an array of words the user has guessed
+    guessedWords = [[]];
+    word; //this is where the random word that is fetched will be stored.
+    availableSpace = 0;
+    availableSpaceEl = document.getElementById(
+      `block-front-` + String(availableSpace)
+    );
+  }
+});
