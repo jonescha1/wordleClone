@@ -15,6 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateGuessedWords(e.key);
   });
 
+  // Adding an on click event for the score button
+  let statBtn = document.getElementById("btn-stats");
+  statBtn.addEventListener("click", () => {
+    settingsOverlay(1);
+  });
+
   // ********************************************************************************************
   // Builds the game board wireframe
   async function buildBoard() {
@@ -118,14 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
     //Creating a nested loop scenarior to check the guessed word against the correct word
     for (let i = 0; i < guessedWordArr.length; i++) {
       for (let j = 0; j < correctWordArr.length; j++) {
-        let count = 0;
-        //This will check to see if a letter in the guessed word is in the correct word as well as if they are in the same index location.
-
         let blockParent = document.getElementById(
           String(availableSpace - elementPosition)
         );
         let firstChild = blockParent.querySelector(".block-inner");
         let secondChild = firstChild.querySelector(".block-back");
+        //This will check to see if a letter in the guessed word is in the correct word as well as if they are in the same index location.
         if (guessedWordArr[i] === correctWordArr[j] && i == j) {
           //flip the corresponding block and set background color to green
           firstChild.classList.add("rotate");
@@ -154,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await showCorrectBlocks(word, currentWord, length);
 
     displayMessage(
-      `Congratulations, You guessed the correct word on try #${length}!!`
+      `Congratulations, You guessed the correct word on try # ${length} with a time of ${showTime()}`
     );
   }
   // ********************************************************************************************
@@ -175,16 +179,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //function to display a status message across the screen
-  function displayMessage(status) {
+  async function displayMessage(status) {
     const message = document.createElement("div");
     message.setAttribute("id", "display_result");
     message.textContent = status;
 
-    // let head = document.getElementsByTagName("header");
     document.body.insertBefore(message, document.body.firstChild);
-    setTimeout(resetGame, 5000);
+
+    await waitForTimeout(5); //Insert the amount in seconds you wish to wait inside the waitForTimeout function.
+    await resetGame();
   }
 
+  // Create a settingsOverlay of the webpage by inserting a container div at the beginning of the body tag.
+  function settingsOverlay(state) {
+    if (state == 1) {
+      const container = document.createElement("div");
+      container.setAttribute("class", "overlay");
+
+      const popup = document.createElement("div");
+      popup.setAttribute("id", "pop_stat");
+      popup.textContent = "Under Construction";
+
+      const close = document.createElement("button");
+      close.setAttribute("class", "button_close");
+      close.textContent = "X";
+
+      popup.appendChild(close);
+
+      container.appendChild(popup);
+      document.body.insertBefore(container, document.body.firstChild);
+    } else if (state == 0) {
+      document.querySelector(".overlay").remove();
+    }
+
+    let closeBtn = document.querySelector(".button_close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        settingsOverlay(0);
+      });
+    }
+  }
+
+  // Resets the game board and fetches a new word
   function resetGame() {
     const board = document.getElementById("board");
     board.innerHTML = "";
@@ -198,5 +234,31 @@ document.addEventListener("DOMContentLoaded", () => {
     availableSpaceEl = document.getElementById(
       `block-front-` + String(availableSpace)
     );
+    seconds = 0;
+  }
+
+  // This is a timeout function that is passed a number in seconds which will convert it to ms.
+  function waitForTimeout(seconds) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+  }
+
+  // Creating a timer to show the user how long it takes for them to complete the game.
+  let timerOutput = setInterval(showTime, 1000);
+  let seconds = 0;
+  function showTime() {
+    seconds++;
+    let hours = Math.floor(seconds / 3600);
+    let mins = Math.floor(seconds / 60) - hours * 60;
+    let secs = Math.floor(seconds % 60);
+    let output =
+      hours.toString().padStart(2, "0") +
+      ":" +
+      mins.toString().padStart(2, "0") +
+      ":" +
+      secs.toString().padStart(2, "0");
+
+    let timer = document.getElementById("time");
+    timer.textContent = output;
+    return output;
   }
 });
