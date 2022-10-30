@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle Clone</title>
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/css/style.css" />
     <script src="js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/a4424871d9.js"
@@ -19,15 +19,16 @@
       </div>
       <div class="title">Wordle</div>
       <div class="menu-right">
-        <button id="btn-stats"><i class="fa-solid fa-ranking-star"></i></button>
-        <button id="btn-settings"><i class="fa-solid fa-gear"></i></button>
+        <button class="btn-primary" id="btn-stats">
+          <i class="fa-solid fa-ranking-star"></i>
+        </button>
+        <button class="btn-primary" id="btn-settings">
+          <i class="fa-solid fa-gear"></i>
+        </button>
       </div>
     </header>
     <section id="game">
-      <div id="board-container">
-        <div id="board"></div>
-      </div>
-      <div id="keyboard-container"></div>
+      <div id="board"></div>
     </section>
   </body>
 </html>
