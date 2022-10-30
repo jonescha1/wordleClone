@@ -1,0 +1,16 @@
+@use "config" as config;
+
+%btn {
+  font-size: 1.2rem;
+  border: none;
+  background: none;
+
+  &:hover {
+    color: #538d4e;
+  }
+}
+
+.btn-primary {
+  @extend %btn;
+  color: config.$color-primary;
+}
