@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap");
+.btn-primary {
+  font-size: 1.2rem;
+  border: none;
+  background: none;
+}
+.btn-primary:hover {
+  color: #538d4e;
+}
+
+.btn-primary {
+  color: #f1f1f1;
+}
+
+.block-back, .block-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.block-front {
+  border: 1px solid #f1f1f1;
+}
+
+.block-back {
+  transform: rotateX(180deg);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(30, 30, 30);
+  height: 100vh;
+}
+
+header {
+  border-bottom: 1px solid #f1f1f1;
+  height: 50px;
+  position: relative;
+  color: #f1f1f1;
+}
+header .menu-left {
+  font-size: 1.2rem;
+  position: absolute;
+  left: 40px;
+  top: 25%;
+}
+header .title {
+  font-family: Kdam Thmor Pro, Arial, sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+header .menu-right {
+  position: absolute;
+  right: 40px;
+  top: 25%;
+  width: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/*******************Style for board*******************/
+#game {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#board {
+  width: 600px;
+  height: 600px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  gap: 10px;
+  position: relative;
+}
+#board .block {
+  background-color: transparent;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+#board .block-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/*# sourceMappingURL=style.css.map */
