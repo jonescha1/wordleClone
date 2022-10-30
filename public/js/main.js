@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     By taking the last elements id number and subtracting 4, it will ensure that the below loop will start at the first block of that row.*/
     var elementPosition = 4;
 
-    //Creating a nested loop scenarior to check the guessed word against the correct word
+    //Creating a nested loop scenario to check the guessed word against the correct word
     for (let i = 0; i < guessedWordArr.length; i++) {
       for (let j = 0; j < correctWordArr.length; j++) {
         let blockParent = document.getElementById(
